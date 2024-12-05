@@ -1,4 +1,4 @@
-package com.example.proyectoresiduoscompose.ui.theme
+package com.example.proyectoresiduoscompose.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 

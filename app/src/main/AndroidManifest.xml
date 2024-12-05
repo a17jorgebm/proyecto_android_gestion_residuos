@@ -18,7 +18,7 @@
             android:value="AIzaSyANBuhJ635CuN2DiHynSPCdmUucN7dViVA"/>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".app.host.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.ProyectoResiduosCompose">
