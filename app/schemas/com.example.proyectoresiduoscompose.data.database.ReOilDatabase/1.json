@@ -1,0 +1,504 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "1097ef8aea9a5fcf4f1899bff0d53188",
+    "entities": [
+      {
+        "tableName": "trucker",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`trucker_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `dni` TEXT NOT NULL, `name` TEXT NOT NULL, `last_name_1` TEXT NOT NULL, `last_name_2` TEXT NOT NULL, `active` INTEGER NOT NULL, `truck_id` INTEGER, FOREIGN KEY(`truck_id`) REFERENCES `truck`(`truck_id`) ON UPDATE NO ACTION ON DELETE SET NULL )",
+        "fields": [
+          {
+            "fieldPath": "truckerId",
+            "columnName": "trucker_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dni",
+            "columnName": "dni",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastName1",
+            "columnName": "last_name_1",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastName2",
+            "columnName": "last_name_2",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "active",
+            "columnName": "active",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "truckId",
+            "columnName": "truck_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "trucker_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_trucker_truck_id",
+            "unique": false,
+            "columnNames": [
+              "truck_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_trucker_truck_id` ON `${TABLE_NAME}` (`truck_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "truck",
+            "onDelete": "SET NULL",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "truck_id"
+            ],
+            "referencedColumns": [
+              "truck_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "truck",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`truck_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `plate` TEXT NOT NULL, `name` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "truckId",
+            "columnName": "truck_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "plate",
+            "columnName": "plate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "truck_id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "route",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`route_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `state` TEXT NOT NULL, `start_date` INTEGER NOT NULL, `end_date` INTEGER, `truck_id` INTEGER, FOREIGN KEY(`truck_id`) REFERENCES `truck`(`truck_id`) ON UPDATE NO ACTION ON DELETE SET NULL )",
+        "fields": [
+          {
+            "fieldPath": "routeId",
+            "columnName": "route_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "state",
+            "columnName": "state",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "startDate",
+            "columnName": "start_date",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "endDate",
+            "columnName": "end_date",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "truckId",
+            "columnName": "truck_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "route_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_route_truck_id",
+            "unique": false,
+            "columnNames": [
+              "truck_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_route_truck_id` ON `${TABLE_NAME}` (`truck_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "truck",
+            "onDelete": "SET NULL",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "truck_id"
+            ],
+            "referencedColumns": [
+              "truck_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "route_collection",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`route_collection_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `state` TEXT NOT NULL, `notes_for_delivery_note` TEXT, `observations` TEXT, `client_signature` BLOB, `client_id` INTEGER NOT NULL, `route_id` INTEGER NOT NULL, FOREIGN KEY(`client_id`) REFERENCES `client`(`client_id`) ON UPDATE NO ACTION ON DELETE RESTRICT , FOREIGN KEY(`route_id`) REFERENCES `route`(`route_id`) ON UPDATE NO ACTION ON DELETE RESTRICT )",
+        "fields": [
+          {
+            "fieldPath": "routeCollectionId",
+            "columnName": "route_collection_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "state",
+            "columnName": "state",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "notesForDeliveryNote",
+            "columnName": "notes_for_delivery_note",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "observations",
+            "columnName": "observations",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "clientSignature",
+            "columnName": "client_signature",
+            "affinity": "BLOB",
+            "notNull": false
+          },
+          {
+            "fieldPath": "clientId",
+            "columnName": "client_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "routeId",
+            "columnName": "route_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "route_collection_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_route_collection_client_id",
+            "unique": false,
+            "columnNames": [
+              "client_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_route_collection_client_id` ON `${TABLE_NAME}` (`client_id`)"
+          },
+          {
+            "name": "index_route_collection_route_id",
+            "unique": false,
+            "columnNames": [
+              "route_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_route_collection_route_id` ON `${TABLE_NAME}` (`route_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "client",
+            "onDelete": "RESTRICT",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "client_id"
+            ],
+            "referencedColumns": [
+              "client_id"
+            ]
+          },
+          {
+            "table": "route",
+            "onDelete": "RESTRICT",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "route_id"
+            ],
+            "referencedColumns": [
+              "route_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "residue",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`residue_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "residueId",
+            "columnName": "residue_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "residue_id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "container",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`container_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `capacity` INTEGER NOT NULL, `name` TEXT NOT NULL, `residue_id` INTEGER NOT NULL, `client_id` INTEGER NOT NULL, FOREIGN KEY(`client_id`) REFERENCES `client`(`client_id`) ON UPDATE NO ACTION ON DELETE RESTRICT , FOREIGN KEY(`residue_id`) REFERENCES `residue`(`residue_id`) ON UPDATE NO ACTION ON DELETE RESTRICT )",
+        "fields": [
+          {
+            "fieldPath": "containerId",
+            "columnName": "container_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "capacity",
+            "columnName": "capacity",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "residueEntity",
+            "columnName": "residue_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "clientEntity",
+            "columnName": "client_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "container_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_container_client_id",
+            "unique": false,
+            "columnNames": [
+              "client_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_container_client_id` ON `${TABLE_NAME}` (`client_id`)"
+          },
+          {
+            "name": "index_container_residue_id",
+            "unique": false,
+            "columnNames": [
+              "residue_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_container_residue_id` ON `${TABLE_NAME}` (`residue_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "client",
+            "onDelete": "RESTRICT",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "client_id"
+            ],
+            "referencedColumns": [
+              "client_id"
+            ]
+          },
+          {
+            "table": "residue",
+            "onDelete": "RESTRICT",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "residue_id"
+            ],
+            "referencedColumns": [
+              "residue_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "client",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`client_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `nnss` INTEGER NOT NULL, `name` TEXT NOT NULL, `address_id` INTEGER, FOREIGN KEY(`address_id`) REFERENCES `address`(`address_id`) ON UPDATE NO ACTION ON DELETE RESTRICT )",
+        "fields": [
+          {
+            "fieldPath": "clientId",
+            "columnName": "client_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nnss",
+            "columnName": "nnss",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "addressId",
+            "columnName": "address_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "client_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_client_address_id",
+            "unique": false,
+            "columnNames": [
+              "address_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_client_address_id` ON `${TABLE_NAME}` (`address_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "address",
+            "onDelete": "RESTRICT",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "address_id"
+            ],
+            "referencedColumns": [
+              "address_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "address",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`address_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `address_text` TEXT NOT NULL, `longitude` INTEGER NOT NULL, `latitude` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "addressId",
+            "columnName": "address_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "addressText",
+            "columnName": "address_text",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "longitude",
+            "columnName": "longitude",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "latitude",
+            "columnName": "latitude",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "address_id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1097ef8aea9a5fcf4f1899bff0d53188')"
+    ]
+  }
+}

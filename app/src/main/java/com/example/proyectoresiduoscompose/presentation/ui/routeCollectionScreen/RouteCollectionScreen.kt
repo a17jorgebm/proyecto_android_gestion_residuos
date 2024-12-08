@@ -496,6 +496,9 @@ fun RouteCollectionScreen(
                         .height(90.dp)
                         .clip(RoundedCornerShape(10.dp))
                         .background(Color(0xFFD8FF7E))
+                        .clickable {
+                            navController.navigate("SignatureScreen")
+                        }
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.signature),
