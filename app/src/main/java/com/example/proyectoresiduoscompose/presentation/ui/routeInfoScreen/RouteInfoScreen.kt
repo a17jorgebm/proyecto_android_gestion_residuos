@@ -38,6 +38,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -138,7 +139,7 @@ fun RouteInfoScreen(
             ) {
                 bottomNavItems.forEachIndexed{ i, item ->
                     NavigationBarItem(
-                        selected = i==selectedBottomNavItem,
+                        selected = false,
                         onClick = {
                             selectedBottomNavItem=i
                             navController.navigate(item.route)
@@ -183,7 +184,7 @@ fun RouteInfoScreen(
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.lorry),
-                            contentDescription = "Camión",
+                            contentDescription = stringResource(id = R.string.your_truck),
                             modifier = Modifier
                                 .height(25.dp)
                                 .aspectRatio(1f),
@@ -206,19 +207,31 @@ fun RouteInfoScreen(
                         //
                     }
             ) {
-                val singapore = LatLng(1.35, 103.87)
+                val locations = listOf(
+                    LatLng(42.88998894861685, -8.547087142329467), // Singapore
+                    LatLng(42.88728026972888, -8.547663533679275), // Marina Bay Sands
+                    LatLng(42.893471824451005, -8.547311583961507), // Gardens by the Bay
+                    LatLng(42.86488845269943, -8.555121063424268), // Sentosa Island
+                    LatLng(42.85321241482345, -8.671803089872805), // Orchard Road
+                    LatLng(42.88610856246535, -8.528606240572675), // Singapore Zoo
+                    LatLng(42.89912376837267, -8.547145319160602)  // Bukit Timah Nature Reserve
+                )
+
                 val cameraPositionState = rememberCameraPositionState {
-                    position = CameraPosition.fromLatLngZoom(singapore, 10f)
+                    position = CameraPosition.fromLatLngZoom(locations[0], 10f)
                 }
+
                 GoogleMap(
                     modifier = Modifier.fillMaxSize(),
                     cameraPositionState = cameraPositionState
-                ){
-                    Marker(
-                        state = MarkerState(position = singapore),
-                        title = "Singapore",
-                        snippet = "Marker in Singapore"
-                    )
+                ) {
+                    locations.forEachIndexed { index, location ->
+                        Marker(
+                            state = MarkerState(position = location),
+                            title = "${stringResource(id = R.string.workshop)} ${index + 1}",
+                            snippet = "${stringResource(id = R.string.workshop)} ${index + 1}"
+                        )
+                    }
                 }
             }
             Row(
@@ -227,7 +240,7 @@ fun RouteInfoScreen(
                 horizontalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = "7 clientes",
+                    text = "7 ${stringResource(id = R.string.customers)}",
                     color = Color.White,
                     fontSize = 14.sp
                 )
@@ -259,14 +272,16 @@ fun RouteInfoScreen(
                                     .align(Alignment.TopCenter)
                                     .padding(0.dp)
                             )
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxHeight() // 140+16+15 (heightContenedor+gap+padding)
-                                    .width(3.dp)
-                                    .offset(0.dp, 35.dp) //15+20
-                                    .align(Alignment.TopCenter)
-                                    .background(Color(0xFFD8FF7E))
-                            )
+                            if (it!=6){ //in the last one it doesnt show the connecting line
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxHeight() // 140+16+15 (heightContenedor+gap+padding)
+                                        .width(3.dp)
+                                        .offset(0.dp, 35.dp) //15+20
+                                        .align(Alignment.TopCenter)
+                                        .background(Color(0xFFD8FF7E))
+                                )
+                            }
                         }
 
                         //información de la recogida
@@ -330,97 +345,11 @@ fun RouteInfoScreen(
                                 horizontalArrangement = Arrangement.Center
                             ) {
                                 Text(
-                                    text = "Ver",
+                                    text = stringResource(id = R.string.view),
                                     color = Color.Black,
                                     fontSize = 14.sp
                                 )
                             }
-                        }
-                    }
-                }
-                Row(
-                    modifier = Modifier.height(140.dp)
-                ){
-                    //indicador de estado
-                    Box(
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .padding(0.dp, 0.dp, 10.dp, 0.dp)
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .padding(0.dp, 20.dp, 0.dp, 0.dp)
-                                .clip(CircleShape)
-                                .background(Color(0xFF7F7F7F))
-                                .height(15.dp)
-                                .aspectRatio(1f)
-                                .align(Alignment.TopCenter)
-                                .padding(0.dp)
-                        )
-                    }
-
-                    //información de la recogida
-                    Box(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(10.dp))
-                            .padding(0.dp)
-                            .background(Color(0xFF292928))
-                            .padding(16.dp)
-                            .weight(1f)
-                    ){
-                        Column(
-                            verticalArrangement = Arrangement.SpaceBetween,
-                            modifier = Modifier
-                                .fillMaxHeight()
-                        ) {
-                            Text(
-                                text = "Talleres Juan Antornio SL Sociedad anonima",
-                                color = Color.White
-                            )
-                            Column(
-                                verticalArrangement = Arrangement.spacedBy(10.dp)
-                            ) {
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.spacedBy(10.dp)
-                                ) {
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.eye),
-                                        contentDescription = "Observations",
-                                        modifier = Modifier.height(20.dp),
-                                        tint = Color.White
-                                    )
-                                    Text(
-                                        text = "Ir entre las 10 y las 12",
-                                        color = Color.White,
-                                        fontSize = 12.sp
-                                    )
-                                }
-                                Icon(
-                                    painter = painterResource(id = R.drawable.bidon_aceite),
-                                    contentDescription = "Aceite usado",
-                                    tint = Color.White,
-                                    modifier = Modifier
-                                        .height(20.dp)
-                                )
-                            }
-                        }
-                        Row(
-                            modifier = Modifier
-                                .clip(RoundedCornerShape(20.dp))
-                                .padding(0.dp)
-                                .background(Color(0xFFD8FF7E))
-                                .padding(30.dp, 5.dp)
-                                .align(Alignment.BottomEnd)
-                            ,
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            Text(
-                                text = "Ver",
-                                color = Color.Black,
-                                fontSize = 14.sp
-                            )
                         }
                     }
                 }

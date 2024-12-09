@@ -8,7 +8,6 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Home
-import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
@@ -33,7 +32,7 @@ import com.example.proyectoresiduoscompose.data.entity.TruckerEntity
 import com.example.proyectoresiduoscompose.data.utils.SharedPreferencesLogin
 import com.example.proyectoresiduoscompose.presentation.ui.editResidueScreen.EditResidueScreen
 import com.example.proyectoresiduoscompose.presentation.theme.ProyectoResiduosComposeTheme
-import com.example.proyectoresiduoscompose.presentation.ui.SignatureScreen
+import com.example.proyectoresiduoscompose.presentation.ui.signatureScreen.SignatureScreen
 import com.example.proyectoresiduoscompose.presentation.ui.homeScreen.HomeScreen
 import com.example.proyectoresiduoscompose.presentation.ui.homeScreen.HomeViewModel
 import com.example.proyectoresiduoscompose.presentation.ui.routeCollectionScreen.RouteCollectionScreen
@@ -75,14 +74,14 @@ class MainActivity : ComponentActivity() {
         //uncomment this to fill database with test data
         populateDatabase()
 
+        viewmodel.executeSomething()
+
         setContent {
             ProyectoResiduosComposeTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    viewmodel.executeSomething()
-
                     val navController = rememberNavController()
                     NavHost(navController=navController, startDestination = "HomeScreen"){
                         composable("HomeScreen"){
@@ -128,7 +127,7 @@ class MainActivity : ComponentActivity() {
         }else{
             //i would redirect to the login screen, but no tiempo :)
             SharedPreferencesLogin.saveUser(this,1)
-            Toast.makeText(this, "Logued in as Pepe", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Logued in as Juana", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -220,12 +219,6 @@ val bottomNavItems = listOf(
         route = "HomeScreen",
         selectedIcon = Icons.Rounded.Home,
         unselectedIcon = Icons.Rounded.Home
-    ),
-    BottomNavItem(
-        title = "Config",
-        route = "RouteDestinationsScreen",
-        selectedIcon = Icons.Rounded.Settings,
-        unselectedIcon = Icons.Rounded.Settings
     )
 )
 

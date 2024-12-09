@@ -39,6 +39,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -133,7 +134,7 @@ fun RouteCollectionScreen(
             ) {
                 bottomNavItems.forEachIndexed{ i, item ->
                     NavigationBarItem(
-                        selected = i==selectedBottomNavItem,
+                        selected = false,
                         onClick = {
                             selectedBottomNavItem=i
                             navController.navigate(item.route)
@@ -186,11 +187,11 @@ fun RouteCollectionScreen(
                             },
                         contentAlignment = Alignment.Center
                     ){
-                        Text("Ver cliente")
+                        Text(stringResource(id = R.string.view_customer))
                     }
                 }
                 Text(
-                    text = "Información del productor",
+                    text = stringResource(id = R.string.producer_information),
                     fontSize = 14.sp,
                     color = Color(0xC6FFFFFF)
                 )
@@ -218,7 +219,7 @@ fun RouteCollectionScreen(
                     .padding(15.dp,15.dp,15.dp,40.dp)
             ) {
                 Text(
-                    text = "Residuos a recoger",
+                    text = stringResource(id = R.string.waste_to_collect),
                     fontSize = 14.sp,
                     color = Color(0xC6FFFFFF),
                     modifier = Modifier
@@ -259,7 +260,7 @@ fun RouteCollectionScreen(
                                 color = Color.White
                             )
                             Text(
-                                text = "Cantidad: 900l",
+                                text = "${stringResource(id = R.string.quantity)}: 900l",
                                 fontSize = 14.sp,
                                 color = Color(0xC6FFFFFF)
                             )
@@ -274,7 +275,7 @@ fun RouteCollectionScreen(
                             contentAlignment = Alignment.Center
                         ){
                             Text(
-                                text = "Ver",
+                                text = stringResource(id = R.string.view),
                                 fontSize = 14.sp
                             )
                         }
@@ -301,7 +302,7 @@ fun RouteCollectionScreen(
                             .padding(0.dp,0.dp,10.dp,0.dp)
                     )
                     Text(
-                        text = "Añadir residuo",
+                        text = stringResource(id = R.string.add_waste),
                         fontSize = 14.sp
                     )
                 }
@@ -314,7 +315,7 @@ fun RouteCollectionScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Nota para el albarán",
+                    text = stringResource(id = R.string.note_for_delivery_note),
                     fontSize = 14.sp,
                     color = Color(0xC6FFFFFF)
                 )
@@ -342,7 +343,7 @@ fun RouteCollectionScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Observaciones",
+                    text = stringResource(id = R.string.observations),
                     fontSize = 14.sp,
                     color = Color(0xC6FFFFFF)
                 )
@@ -357,8 +358,9 @@ fun RouteCollectionScreen(
                         .clip(RoundedCornerShape(10.dp))
                         .background(Color(0xFF292928))
                         .fillMaxWidth()
-                        .height(150.dp),
-                    textStyle = LocalTextStyle.current.copy(color = Color.White),
+                        .height(150.dp)
+                        .padding(10.dp),
+                    textStyle = LocalTextStyle.current.copy(color = Color.White)
                 )
             }
 
@@ -370,7 +372,7 @@ fun RouteCollectionScreen(
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 Text(
-                    text = "Fotografías",
+                    text = stringResource(id = R.string.photos),
                     fontSize = 14.sp,
                     color = Color(0xC6FFFFFF)
                 )
@@ -403,7 +405,7 @@ fun RouteCollectionScreen(
                                 .padding(0.dp, 0.dp, 15.dp, 0.dp)
                         )
                         Text(
-                            text = "Añadir fotografía"
+                            text = stringResource(id = R.string.add_photo)
                         )
                     }
                     //ver fotos
@@ -418,7 +420,7 @@ fun RouteCollectionScreen(
                     ){
                         Icon(
                             painter = painterResource(id = R.drawable.gallery),
-                            contentDescription = "Galeria",
+                            contentDescription = stringResource(R.string.gallery),
                             modifier = Modifier
                                 .height(40.dp)
                                 .aspectRatio(1f)
@@ -437,7 +439,7 @@ fun RouteCollectionScreen(
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 Text(
-                    text = "Estado",
+                    text = stringResource(id = R.string.status),
                     fontSize = 14.sp,
                     color = Color(0xC6FFFFFF)
                 )
@@ -454,6 +456,9 @@ fun RouteCollectionScreen(
                             .weight(1f)
                             .clip(RoundedCornerShape(10.dp))
                             .background(Color(0xFFF0625C))
+                            .clickable {
+                                navController.popBackStack()
+                            }
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.cancel),
@@ -464,7 +469,7 @@ fun RouteCollectionScreen(
                                 .padding(0.dp, 0.dp, 15.dp, 0.dp)
                         )
                         Text(
-                            text = "No recogido",
+                            text = stringResource(id = R.string.not_collected),
                         )
                     }
                     Row(
@@ -474,6 +479,9 @@ fun RouteCollectionScreen(
                             .weight(1f)
                             .clip(RoundedCornerShape(10.dp))
                             .background(Color(0xFF1F515D))
+                            .clickable {
+                                navController.popBackStack()
+                            }
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.person_check),
@@ -484,7 +492,7 @@ fun RouteCollectionScreen(
                                 .padding(0.dp, 0.dp, 15.dp, 0.dp)
                         )
                         Text(
-                            text = "Completar",
+                            text = stringResource(id = R.string.complete),
                         )
                     }
                 }
@@ -509,7 +517,7 @@ fun RouteCollectionScreen(
                             .padding(0.dp, 0.dp, 15.dp, 0.dp)
                     )
                     Text(
-                        text = "Firmar",
+                        text = stringResource(id = R.string.sign),
                     )
                 }
             }

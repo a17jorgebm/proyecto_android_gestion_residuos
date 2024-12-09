@@ -42,6 +42,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -58,7 +59,9 @@ fun EditResidueScreen(
         mutableIntStateOf(0)
     }
 
-    var a by remember { mutableStateOf("") }
+    var peso by remember { mutableStateOf("") }
+    var bultos by remember { mutableStateOf("") }
+    var numEnvases by remember { mutableStateOf("") }
 
 
     Scaffold(
@@ -114,7 +117,7 @@ fun EditResidueScreen(
             ) {
                 bottomNavItems.forEachIndexed { i, item ->
                     NavigationBarItem(
-                        selected = i == selectedBottomNavItem,
+                        selected = false,
                         onClick = {
                             selectedBottomNavItem = i
                             navController.navigate(item.route)
@@ -145,7 +148,7 @@ fun EditResidueScreen(
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 Text(
-                    text = "Información del residuo",
+                    text = stringResource(id = R.string.waste_information),
                     fontSize = 14.sp,
                     color = Color(0xC6FFFFFF)
                 )
@@ -156,9 +159,6 @@ fun EditResidueScreen(
                         .fillMaxWidth()
                         .height(80.dp)
                         .padding(15.dp)
-                        .clickable {
-                            navController.navigate("EditResidueScreen")
-                        }
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.bidon_aceite),
@@ -194,16 +194,16 @@ fun EditResidueScreen(
                             .weight(1f),
                     ) {
                         Text(
-                            text = "Peso",
+                            text = stringResource(id = R.string.weight),
                             fontSize = 14.sp,
                             color = Color(0xC6FFFFFF),
                             modifier = Modifier
                                 .padding(10.dp,0.dp,0.dp,5.dp)
                         )
                         TextField(
-                            value = a,
+                            value = peso,
                             onValueChange = {
-                                a=it
+                                peso=it
                             },
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -233,16 +233,16 @@ fun EditResidueScreen(
                             .weight(1f),
                     ) {
                         Text(
-                            text = "Bultos",
+                            text = stringResource(id = R.string.packages),
                             fontSize = 14.sp,
                             color = Color(0xC6FFFFFF),
                             modifier = Modifier
                                 .padding(10.dp,0.dp,0.dp,5.dp)
                         )
                         TextField(
-                            value = a,
+                            value = bultos,
                             onValueChange = {
-                                a=it
+                                bultos=it
                             },
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -254,17 +254,7 @@ fun EditResidueScreen(
                             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                             singleLine = true,
                             colors = CustomTextInputColors,
-                            textStyle = TextStyle(color = Color.White),
-                            trailingIcon = {
-                                if (true){ //se ten metidas (kg,l...)
-                                    IconButton(onClick = {  }) {
-                                        Text(
-                                            text = "kg",
-                                            color = Color(0xC6FFFFFF)
-                                        )
-                                    }
-                                }
-                            }
+                            textStyle = TextStyle(color = Color.White)
                         )
                     }
                 }
@@ -278,7 +268,7 @@ fun EditResidueScreen(
                             .weight(1f),
                     ) {
                         Text(
-                            text = "Contenedor",
+                            text = stringResource(id = R.string.container),
                             fontSize = 14.sp,
                             color = Color(0xC6FFFFFF),
                             modifier = Modifier
@@ -300,16 +290,16 @@ fun EditResidueScreen(
                             .weight(1f),
                     ) {
                         Text(
-                            text = "Nº envases",
+                            text = stringResource(id = R.string.number_of_containers),
                             fontSize = 14.sp,
                             color = Color(0xC6FFFFFF),
                             modifier = Modifier
                                 .padding(10.dp,0.dp,0.dp,5.dp)
                         )
                         TextField(
-                            value = a,
+                            value = numEnvases,
                             onValueChange = {
-                                a=it
+                                numEnvases=it
                             },
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -344,7 +334,7 @@ fun EditResidueScreen(
                         )
                     )
                     Text(
-                        text = "Recogido",
+                        text = stringResource(id = R.string.collected),
                         color = Color.White
                     )
                 }
@@ -358,17 +348,20 @@ fun EditResidueScreen(
                         .height(90.dp)
                         .clip(RoundedCornerShape(10.dp))
                         .background(Color(0xFFD8FF7E))
+                        .clickable {
+                            navController.popBackStack()
+                        }
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.save),
-                        contentDescription = "Signature",
+                        contentDescription = stringResource(R.string.signature),
                         modifier = Modifier
                             .height(40.dp)
                             .aspectRatio(1f)
                             .padding(0.dp, 0.dp, 15.dp, 0.dp)
                     )
                     Text(
-                        text = "Guardar",
+                        text = stringResource(id = R.string.save),
                     )
                 }
             }

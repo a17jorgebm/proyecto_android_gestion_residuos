@@ -1,7 +1,6 @@
-package com.example.proyectoresiduoscompose.presentation.ui
+package com.example.proyectoresiduoscompose.presentation.ui.signatureScreen
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
@@ -15,10 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowLeft
 import androidx.compose.material3.Icon
@@ -40,8 +36,8 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -109,7 +105,7 @@ fun SignatureScreen(
             ) {
                 bottomNavItems.forEachIndexed{ i, item ->
                     NavigationBarItem(
-                        selected = i==selectedBottomNavItem,
+                        selected = false,
                         onClick = {
                             selectedBottomNavItem=i
                             navController.navigate(item.route)
@@ -166,7 +162,7 @@ fun SignatureScreen(
                             .padding(0.dp, 0.dp, 15.dp, 0.dp)
                     )
                     Text(
-                        text = "Cancelar",
+                        text = stringResource(id = R.string.cancel),
                     )
                 }
                 Row(
@@ -176,6 +172,10 @@ fun SignatureScreen(
                         .weight(1f)
                         .clip(RoundedCornerShape(10.dp))
                         .background(Color(0xFFD8FF7E))
+                        .clickable {
+                            //se guardaria la firma como array de bytes
+                            navController.popBackStack()
+                        }
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.check),
@@ -186,7 +186,7 @@ fun SignatureScreen(
                             .padding(0.dp, 0.dp, 15.dp, 0.dp)
                     )
                     Text(
-                        text = "Listo",
+                        text = stringResource(id = R.string.ready),
                     )
                 }
             }

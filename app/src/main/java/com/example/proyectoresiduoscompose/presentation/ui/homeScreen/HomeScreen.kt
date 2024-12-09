@@ -33,6 +33,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -117,7 +118,7 @@ fun HomeScreen(
                 ) {
                 bottomNavItems.forEachIndexed{ i, item ->
                     NavigationBarItem(
-                        selected = i==selectedBottomNavItem,
+                        selected = true,//i==selectedBottomNavItem,
                         onClick = {
                             selectedBottomNavItem=i
                             navController.navigate(item.route)
@@ -166,13 +167,13 @@ fun HomeScreen(
                     verticalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "Trayecto de hoy",
+                        text = stringResource(id = R.string.today_journey),
                         fontSize = 16.sp,
                         color = Color.White,
                         fontFamily = FontFamily(Font(R.font.poppins_regular, FontWeight.Light))
                     )
                     Text(
-                        text = "Ver en el mapa",
+                        text = stringResource(id = R.string.view_on_map),
                         color = Color(0xFFD8FF7E),
                         fontSize = 12.sp
                     )
@@ -180,7 +181,7 @@ fun HomeScreen(
 
                 Image(
                     painter = painterResource(id = R.drawable.ruta),
-                    contentDescription = "Imagen sección trayecto de hoy",
+                    contentDescription = stringResource(id = R.string.today_journey),
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .weight(0.6f)
@@ -212,20 +213,20 @@ fun HomeScreen(
                                 .fillMaxWidth()
                         ) {
                             Text(
-                                text = "Tu camión",
+                                text = stringResource(id = R.string.your_truck),
                                 fontSize = 16.sp,
                                 color = Color.Black,
                                 fontFamily = FontFamily(Font(R.font.poppins_regular, FontWeight.Light))
                             )
                             Text(
-                                text = "Ver",
+                                text = stringResource(id = R.string.view),
                                 color = Color(0xFF7F7F7F), //gris clarito
                                 fontSize = 12.sp
                             )
                         }
                         Image(
                             painter = painterResource(id = R.drawable.camion),
-                            contentDescription = "Trayectos",
+                            contentDescription = stringResource(id = R.string.your_truck),
                             modifier = Modifier
                                 .align(Alignment.BottomEnd)
                                 .height(60.dp)
@@ -250,20 +251,20 @@ fun HomeScreen(
                                 .fillMaxWidth()
                         ) {
                             Text(
-                                text = "Trayectos",
+                                text = stringResource(id = R.string.journeys),
                                 fontSize = 16.sp,
                                 color = Color.White,
                                 fontFamily = FontFamily(Font(R.font.poppins_regular, FontWeight.Light))
                             )
                             Text(
-                                text = "Ver",
+                                text = stringResource(id = R.string.view),
                                 color = Color(0xFF7F7F7F), //gris clarito
                                 fontSize = 12.sp
                             )
                         }
                         Image(
                             painter = painterResource(id = R.drawable.carretera),
-                            contentDescription = "Trayectos",
+                            contentDescription = stringResource(id = R.string.journeys),
                             modifier = Modifier
                                 .align(Alignment.BottomEnd)
                                 .height(60.dp)

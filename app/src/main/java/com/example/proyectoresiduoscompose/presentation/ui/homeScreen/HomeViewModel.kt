@@ -11,7 +11,8 @@ class HomeViewModel(
 
     fun executeSomething(){
         viewModelScope.launch {
-            val truck = dao.getTruckWithRoutes(1)
+            val truck = dao.getTruckWithRoutes(57)
+            println(truck)
         }
     }
 }
